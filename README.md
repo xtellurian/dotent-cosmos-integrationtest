@@ -104,3 +104,8 @@ The active test run was aborted. Reason: Test host process crashed : Process ter
 
 The root cause appears related to the creation of many text fixtures by XUnit, causing some kind of race condition or deadlock. Running the same test within the same context does not produce the exception.
 
+# FAQ
+
+## Why are you using KeyVault, Asp Net Core identity etc?
+
+Just checking the failures weren't due to a race condition with the local file system and encryption keys.

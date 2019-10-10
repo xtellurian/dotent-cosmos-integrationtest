@@ -1,11 +1,10 @@
 
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace src
 {
-    public class MyContext : IdentityDbContext<IdentityUser>
+    public class MyContext : DbContext
     {
         public MyContext(DbContextOptions<MyContext> options)
            : base(options)

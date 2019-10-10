@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 
 namespace src
 {
@@ -40,25 +34,6 @@ namespace src
                     options.UseLazyLoadingProxies();
                 });
 
-            services.AddAuthentication()
-            .AddJwtBearer(x =>
-           {
-               x.RequireHttpsMetadata = Env.IsProduction();
-               x.SaveToken = true;
-               x.TokenValidationParameters = new TokenValidationParameters
-               {
-                   ValidateIssuerSigningKey = true,
-                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Secrets.JwtKey)),
-                   ValidIssuer = Secrets.Issuer,
-                   ValidAudience = Secrets.Audience,
-                   ValidateIssuer = false,
-                   ValidateAudience = false
-               };
-           });
-
-           services.AddDefaultIdentity<IdentityUser>()
-                .AddDefaultUI()
-                .AddEntityFrameworkStores<MyContext>();
 
             services.AddMvc();
         }
@@ -72,8 +47,6 @@ namespace src
             }
 
             app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet("/", async context =>
