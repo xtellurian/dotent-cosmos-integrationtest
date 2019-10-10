@@ -5,7 +5,8 @@ using Xunit;
 
 namespace test
 {
-    public class UnitTest4: IClassFixture<WebApplicationFactory<src.Startup>>
+    [Collection(nameof(IntegrationCollection))]
+    public class UnitTest4 //: IClassFixture<WebApplicationFactory<src.Startup>>
     {
         private readonly WebApplicationFactory<src.Startup> _factory;
 
@@ -27,13 +28,9 @@ namespace test
         
         public async Task Test1(int count)
         {
-            Console.WriteLine($"Test Number {count}");
+           Console.WriteLine($"Test Number {count}");
 
             var client = _factory.CreateClient();
-            var tokenResponse = await client.GetAsync("api/token");
-            tokenResponse.EnsureSuccessStatusCode();
-            var token = await tokenResponse.Content.ReadAsStringAsync();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
             var res = await client.GetAsync("api/model");
             res.EnsureSuccessStatusCode();
